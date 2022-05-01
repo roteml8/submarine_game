@@ -141,7 +141,6 @@ public class Board {
 	
 	protected boolean checkValidInput(int x, int y) {            
    		if (x > ROWS-2 || x < 1 || y > COLS-2 || y < 1) {
-    			System.out.println("Your input is not valid, Try again.");
     			return false;                                             
     		}                                                          
                                                                  
