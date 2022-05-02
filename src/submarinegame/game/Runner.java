@@ -6,9 +6,11 @@ public class Runner {
 
 		Player player = new Player("Rotem","missroteml@gmail.com","0525360337");
 		Game game = new Game(player);
-		game.readGuessesFromFile();
+		game.play();
+		game.writeGameToFile();
+		game = new Game(player);
+		game.readGameFromFile();
 		game.replayGame();
-		//game.play();
 		
 	}
 }

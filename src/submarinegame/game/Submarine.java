@@ -1,10 +1,15 @@
 package submarinegame.game;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Submarine {
+public class Submarine implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 246501051980011489L;
 	protected int size;
 	protected int xLength;
 	protected int yLength;

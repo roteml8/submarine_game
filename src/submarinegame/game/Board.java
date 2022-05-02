@@ -1,10 +1,15 @@
 package submarinegame.game;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Board {
+public class Board implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1237049972419253868L;
 	protected final int ROWS = 12;
 	protected final int COLS = 12;
 	protected final int NUM_SUBMARINES = 10;
@@ -19,6 +24,15 @@ public class Board {
 		this.matrix = new char[ROWS][COLS];
 		this.subs = new Submarine[NUM_SUBMARINES];
 		
+	}
+	
+	public void clearBoard()
+	{
+		for (int i=1; i<ROWS-1; i++)
+		{
+			for (int j=1; j<COLS-1; j++)
+				matrix[i][j] = ' ';
+		}
 	}
 	
 	public void initializeBoard() {

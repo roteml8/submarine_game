@@ -106,7 +106,6 @@ public class Game  {
 		}
 		if (!win)
 			System.out.println("you lost!");
-		writeGuessesToFile();
 		sc.close();
 	}
 
@@ -147,11 +146,14 @@ public class Game  {
 		return Integer.parseInt(input);
 	}
 	
-	private void writeGuessesToFile()
+	public void writeGameToFile()
 	{
 		try (FileOutputStream file = new FileOutputStream(filePath);
 				ObjectOutputStream output = new ObjectOutputStream(file))
 		{
+			output.writeObject(this.logicBoard);
+			userBoard.clearBoard();
+			output.writeObject(this.userBoard);
 			for (int i=0; i<NUM_GUESSES; i++)
 			{
 				output.writeObject(playerGuesses[i]);
@@ -164,17 +166,19 @@ public class Game  {
 		}
 	}
 	
-	public void readGuessesFromFile()
+	public void readGameFromFile()
 	{
 		try (FileInputStream file = new FileInputStream(filePath);
 				ObjectInputStream input = new ObjectInputStream(file))
 		{
+				this.logicBoard = (Board) input.readObject();
+				this.userBoard = (Board) input.readObject();
 				for (int i=0; i<NUM_GUESSES; i++)
 				{
 					Object obj = input.readObject();
 					if (obj == null)
 						break;
-					Guess guess = (Guess) input.readObject();
+					Guess guess = (Guess)obj;
 					this.playerGuesses[i] = guess;
 				}
 			
