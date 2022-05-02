@@ -153,7 +153,9 @@ public class Game  {
 				ObjectOutputStream output = new ObjectOutputStream(file))
 		{
 			for (int i=0; i<NUM_GUESSES; i++)
+			{
 				output.writeObject(playerGuesses[i]);
+			}
 
 		} catch (FileNotFoundException e) {
 			System.out.println(e);
@@ -169,17 +171,18 @@ public class Game  {
 		{
 				for (int i=0; i<NUM_GUESSES; i++)
 				{
+					Object obj = input.readObject();
+					if (obj == null)
+						break;
 					Guess guess = (Guess) input.readObject();
 					this.playerGuesses[i] = guess;
 				}
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (IOException e) {
 			System.out.println(e);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 	}
@@ -191,7 +194,10 @@ public class Game  {
 		printBoardAndScore();
 		for (int i=0; i<NUM_GUESSES; i++)
 		{
+	
 			Guess current = playerGuesses[i];
+			if (current == null)
+				break;
 			if (checkGuess(current.xGuess, current.yGuess)) {
 				userBoard.markHit(current.xGuess, current.yGuess, logicBoard.subs);
 				logicBoard.markHit(current.xGuess, current.yGuess, logicBoard.subs);

@@ -12,7 +12,6 @@ public class Board {
 
 	protected char[][] matrix;
 	protected Submarine[] subs;
-	protected int totalSubsCells = 0;
 
 	
 	public Board()
@@ -127,13 +126,9 @@ public class Board {
 			subs[subIndex].submarineCoords[i].x = xtmp;
 			subs[subIndex].submarineCoords[i].y = ytmp;
 			matrix[xtmp][ytmp] = 'S';
-			totalSubsCells++;
 		}
 	}
 
-	protected int getTotalSubsCells() {
-		return totalSubsCells;
-	}
 
 	protected char getCellValue(int x, int y) {
 		return matrix[x][y];
