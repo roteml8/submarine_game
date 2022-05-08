@@ -14,8 +14,9 @@ import submarinegame.exceptions.OutOfTargetsException;
 
 public class Game  {
 	
-	protected final int NUM_GUESSES = 5;
+	protected final int NUM_GUESSES = 50;
 	protected static String filePath = "files/record.dat";
+	protected static Scanner sc = new Scanner(System.in);
 
 	protected Board userBoard;
 	protected Board logicBoard;
@@ -43,7 +44,7 @@ public class Game  {
 	}
 	
 	public void play() {
-		Scanner sc = new Scanner(System.in);
+		//Scanner sc = new Scanner(System.in);
 		int currentPoints, x=0, y=0;
 		String input = "";
 		boolean lastGuess = false,  win=false;
@@ -57,8 +58,8 @@ public class Game  {
 				try {
 					if (hits == logicBoard.NUM_SUBMARINES)
 						throw new OutOfTargetsException();
-					x = getCoordinate('X', sc);
-					y = getCoordinate('Y', sc);
+					x = getCoordinate("row");
+					y = getCoordinate("column");
 					if (!userBoard.checkValidInput(x, y))
 						throw new OutOfBoardException();
 					validInput = true;
@@ -114,7 +115,7 @@ public class Game  {
 		System.out.println(
 				"Your score is: " + points + ", number of hits is: " + hits + ", number of misses: " + misses);
 		//System.out.println("Enter X and Y coordinate, Or press q to quit.");
-		System.out.printf("X coordinates 1-%d, Y coordinates 1-%d\n", logicBoard.ROWS-2, logicBoard.COLS-2);
+		System.out.printf("row coordinates 1-%d, column coordinates 1-%d\n", logicBoard.ROWS-2, logicBoard.COLS-2);
 	}
 
 	private void printLogicBoard()
@@ -136,7 +137,7 @@ public class Game  {
 		return false;
 	}
 
-	protected int getCoordinate(char coordinate, Scanner sc) {
+	protected int getCoordinate(String coordinate) {
 		String input;
 		System.out.println("Enter " + coordinate + " coordinate");
 		input = sc.next();
