@@ -14,9 +14,10 @@ import submarinegame.exceptions.OutOfTargetsException;
 
 public class Game  {
 	
-	protected final int NUM_GUESSES = 50;
-	protected static String filePath = "files/record.dat";
+	protected final int NUM_GUESSES = 5;
+	protected static String filePath = "files/record";
 	protected static Scanner sc = new Scanner(System.in);
+	protected static int numRecordings = 0;
 
 	protected Board userBoard;
 	protected Board logicBoard;
@@ -41,6 +42,11 @@ public class Game  {
 		this.logicBoard.setSubsOnBoard();
 		this.player = player;
 		this.playerGuesses = new Guess[NUM_GUESSES];
+	}
+	
+	public Game()
+	{
+		this(null);
 	}
 	
 	public void play() {
@@ -107,7 +113,7 @@ public class Game  {
 		}
 		if (!win)
 			System.out.println("you lost!");
-		sc.close();
+	//	sc.close();
 	}
 
 	private void printBoardAndScore() {
@@ -149,9 +155,11 @@ public class Game  {
 	
 	public void writeGameToFile()
 	{
-		try (FileOutputStream file = new FileOutputStream(filePath);
+		numRecordings++;
+		try (FileOutputStream file = new FileOutputStream(filePath+numRecordings+".dat");
 				ObjectOutputStream output = new ObjectOutputStream(file))
 		{
+			output.writeObject(this.player);
 			output.writeObject(this.logicBoard);
 			userBoard.clearBoard();
 			output.writeObject(this.userBoard);
@@ -167,11 +175,12 @@ public class Game  {
 		}
 	}
 	
-	public void readGameFromFile()
+	public void readGameFromFile(int numGame)
 	{
-		try (FileInputStream file = new FileInputStream(filePath);
+		try (FileInputStream file = new FileInputStream(filePath+numGame+".dat");
 				ObjectInputStream input = new ObjectInputStream(file))
 		{
+				this.player = (Player) input.readObject();
 				this.logicBoard = (Board) input.readObject();
 				this.userBoard = (Board) input.readObject();
 				for (int i=0; i<NUM_GUESSES; i++)
@@ -196,6 +205,7 @@ public class Game  {
 	{
 		int currentPoints;
 		boolean lastGuess=false;
+		System.out.println(this.player);
 		printBoardAndScore();
 		for (int i=0; i<NUM_GUESSES; i++)
 		{
